@@ -290,3 +290,13 @@ body {
     -webkit-border-radius: 50%;
     border-radius: 50%;
 }
+
+/* custom */
+.chat-header-user{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.chat-header-user div{
+   text-align: start;
+}
