@@ -6,22 +6,24 @@ app.set("views","./views");
 
 var server = require("http").Server(app);
 var io = require("socket.io")(server);
-const registerTestHandlers = require("./function/test");
 
+// namespace 1
+const nsp1 = io.of("/my-namespace1");
 
-//namespace 1
-const onConnection = (socket) => {
-    registerTestHandlers(io, socket);
-};
-io.on("connection", onConnection);
-
-//namespace 2
-const nsp = io.of("/my-namespace");
-
-nsp.on("connection", socket => {
-    console.log("someone connected");
-    nsp.emit("hi", "everyone!");
+nsp1.on("connection", socket => {
+    console.log("my-namespace1");
+    nsp1.emit("hi", "everyone!");
 });
+
+
+// namespace 2
+const nsp2 = io.of("/my-namespace2");
+
+nsp2.on("connection", socket => {
+    console.log("my-namespace2");
+    nsp2.emit("hi", "everyone!");
+});
+
 
 
 app.get("/", function (req, res) {
