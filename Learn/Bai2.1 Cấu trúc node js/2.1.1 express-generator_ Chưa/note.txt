@@ -1,0 +1,10 @@
+npm install express socket.io http ejs
+
+
+=> Sử dụng công cụ tạo ứng dụng express-generator, để nhanh chóng tạo khung ứng dụng.
+Bạn có thể chạy trình tạo ứng dụng bằng npxlệnh (có sẵn trong Node.js 8.2.0).
+    $ npx express-generator
+
+=> Đối với các phiên bản Node trước đó, hãy cài đặt trình tạo ứng dụng dưới dạng gói npm chung rồi khởi chạy nó:
+    $ npm install -g express-generator
+    $ express
