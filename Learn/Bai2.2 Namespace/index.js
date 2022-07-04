@@ -5,7 +5,19 @@ app.set("view engine", "ejs");
 app.set("views","./views");
 
 var server = require("http").Server(app);
-var io = require("socket.io")(server);
+const io  = require('socket.io')(server, {
+    cors: {
+        credentials: true,
+        origin: "*",
+        methods: ["GET", "POST"]
+    },
+    allowRequest: (req, callback) => {
+        var date1 = new Date();
+        var month = date1.getSeconds();
+        console.log(month);
+        callback(null, true);
+    }
+});
 
 // namespace 1
 const nsp1 = io.of("/my-namespace1");
