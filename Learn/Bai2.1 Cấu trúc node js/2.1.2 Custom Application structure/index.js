@@ -19,3 +19,7 @@ app.get("/", function (req, res) {
 });
 
 server.listen(3000);
+
+
+
+//https://socket.io/docs/v4/server-application-structure/
