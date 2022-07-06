@@ -19,8 +19,8 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
         $(document).ready(function () {
-            var socket = io("http://localhost:3000/my-namespace1");
-            socket.on('server-send-val', (msg)=>{console.log(msg)});
+            var socket = io("http://localhost:3000/my-namespace");
+            socket.on('hi', (msg)=>{console.log(msg)});
         });
     </script>
 </body>
