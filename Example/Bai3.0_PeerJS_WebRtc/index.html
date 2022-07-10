@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Khoa Pham WebRTC</title>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/peerjs@0.3.20/dist/peer.min.js"></script> -->
+    <!-- <script src="peer.js"> </script> -->
+    <!-- <script src="socket.io.js"></script> -->
+    <script src="jquery.js"> </script>
+    <!-- <script src="https://unpkg.com/peerjs@1.4.5/dist/peerjs.min.js"> </script> -->
+
+</head>
+
+<body>
+
+    <p>Online user:</p>
+    <ul id="ulUser">
+    </ul>
+    <h3 id="my-peer">Your Id: </h3>
+    <video id="localStream" width="300" controls></video>
+    <br /><br />
+    <video id="remoteStream" width="300" controls></video>
+    <br /><br />
+    <input type="text" id="remoteId" placeholder="Remote ID">
+    <button id="btnCall">Call123</button>
+    <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+    <script type="text/javascript">
+        //(function () {
+
+        var lastPeerId = null;
+        var peer = null; // Own peer object
+        var peerId = null;
+        peer = new Peer(null);
+
+        peer.on('open', id => {
+            console.log(id);
+        });
+        $('#btnCall').click(() => {
+            const id = $('#remoteId').val();
+            console.log(id);
+            navigator.mediaDevices.getUserMedia(
+                { video: true, audio: true },
+                (stream) => {
+                    const call = peer.call(id, stream);
+                    call.on("stream", (remoteStream) => {
+                        const video = document.getElementById('localStream');
+                        video.srcObject = stream;
+                        video.play();
+                    });
+                },
+                (err) => {
+                    console.error("Failed to get local stream", err);
+                },
+            );
+        });
+
+        peer.on("call", (call) => {
+            navigator.mediaDevices.getUserMedia(
+                { video: true, audio: true },
+                (stream) => {
+                    call.answer(stream); // Answer the call with an A/V stream.
+                    call.on("stream", (remoteStream) => {
+                        const video = document.getElementById('remoteStream');
+                        video.srcObject = stream;
+                        video.play();
+                    });
+                },
+                (err) => {
+                    console.error("Failed to get local stream", err);
+                },
+            );
+        });
+       // })();
+    </script>
+
+</html>
