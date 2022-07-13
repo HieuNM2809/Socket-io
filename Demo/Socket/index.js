@@ -12,7 +12,6 @@ const io  = require('socket.io')(server, {
     }
 });
 
-
 let users = [];
 const addUser = (username, socketId) => {
     users.push({username, socketId})
@@ -23,11 +22,15 @@ const removeUser = (socketId) => {
 const getUser = (username) => {
     return users.find(user => user.username === username)
 }
+const getUserBySocketId= (socketId) => {
+    return users.find(user => user.socketId === socketId)
+}
 
 io.on("connection" ,function (socket) {
     console.log("TRUY CAP: " + socket.id);
 
     socket.on("connected", username => {
+        console.log(username);
         addUser(username, socket.id);
         console.log(users);
     })
@@ -44,13 +47,24 @@ io.on("connection" ,function (socket) {
     })
 
     socket.on("disconnect",function () {
+        var user = getUserBySocketId(socket.id);
         removeUser(socket.id);
-        // console.log("NGAT KET NOI "+socket.id);
+        if(user){
+            console.log("NGAT KET NOI "+ user.username);
+        }
     });
 })
-
+app.io = io;
 app.get("/", function (req, res) {
     res.render("trangchu");    
+});
+app.get("/send-noti", function (req, res) {
+    // console.log(username,msg);
+    const user = getUser( req.query.username);
+    console.log(user);
+    res.send('hello');
+
+    req.app.io.to(user.socketId).emit('hello-all', 'hello mn');  
 });
 
 server.listen(3000);
