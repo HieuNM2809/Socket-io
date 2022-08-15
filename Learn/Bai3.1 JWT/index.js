@@ -14,14 +14,13 @@ server.listen(3000, () => {
 });
 
 app.get('/get-token',(req ,res ) => {
-    
     var data = jwt.sign({
        username :req.body.username
     }, 'secret', { expiresIn: 60});
     return res.json(data);
 });
 app.post('/check-token',(req,res ) => {
-    const token = req.body.token || req.query.token || req.headers["token"] ||req.headers.authorization.token;
+    const token = req.body.token || req.query.token || req.headers["token"] || req.headers.authorization.token;
     try {
         const decoded = jwt.verify(token, 'secret');
         return res.json(decoded);
