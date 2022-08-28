@@ -5,7 +5,10 @@ app.set("view engine", "ejs");
 app.set("views","./views");
 
 var server = require("http").Server(app);
-var io = require("socket.io")(server);
+// set path: đường dẫn nhúng link vào html
+var io = require("socket.io")(server,{
+    path: "/my-custom-path/"    
+});
 
 io.on("connection" ,function (socket) {
     console.log("co ng truy cap: " + socket.id);
