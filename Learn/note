@@ -1,0 +1,11 @@
+//1. gửi toàn serve
+io.sockets.emit('server-gui-tin-nhan',{ 'tong':(parseInt(so1)+parseInt(so2)) });  // gửi message đến mn
+
+//2. Gửi lại chính mình 
+//socket.emit('server-gui-tin-nhan', "Send: "+ msg);  // gửi message đến mn
+
+//3. Gửi toàn server trừ mình 
+//socket.broadcast.emit('server-gui-tin-nhan', "Send: "+ msg);  // gửi message đến mn
+
+// gửi đến 1 người
+//io.to(socketID).emit('server-gui-tin-nhan', 'Send by: ' +socket.id + ' =>' + msg);
